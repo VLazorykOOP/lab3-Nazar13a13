@@ -1,97 +1,169 @@
-﻿// See https://aka.ms/new-console-template for more information
-using MyTask;
+﻿using System;
 
-/// <summary>
-///  Top-level statements 
-///  Код програми (оператори)  вищого рівня
-/// </summary>
-/// 
-Console.WriteLine("Hello, World!");
-//
-//  Приклад коду
-//
 
-Animal[] animals = new Animal[4];
-animals[0] = new Animal();
-animals[0].Name = "Bizon"; animals[0].WWeight=100;
-Console.WriteLine(" my animal " + animals[0].ToString());
-animals[1] = new Animal(100,10,"Cow");
-animals[2] = new Animal(102, 12, "Cow Big");
-animals[3] = new Animal(100, 10, "Zebra");
-
-for(int i = 0; i < 4; i++)
+namespace Lab3
 {
-    Console.WriteLine("  animal " + i + " " + animals[i].ToString());
-}
-
-Big b = new Big();
-Console.WriteLine(" Big" + b +"   "+ b.ToString() + "  " + b.Name);
-
-Console.WriteLine(" Task 2");
-Task2.Run();
-     
-
-/// <summary>
-///  Закічення  іструкцій верхнього рівня
-/// Top-level statements must precede namespace and type declarations.
-/// Оператори верхнього рівня мають передувати оголошенням простору імен і типу.
-///   
-/// </summary>
-class Big
-{
-    private string name =" First init";
-    public Big()
+    
+    //1.1. Задано масив точок. Вивести в консоль інформацію про точку та
+    //відстань до центра координат. Точки які знаходяться більше
+    //середньої відстані, перемістити на заданий вектор. Створити клас
+    //Point
+    class Point
     {
-        name = "NoName";
-    }
-    public Big(string name)
-    {
-        this.name = name;
-        
-    }
-    public string Name { 
-        get { return name; } 
-        set { name = value; }
-    }
+        private int x, y;
+        private readonly int c;
 
-};
-namespace MyTask
-{
-    static class Task2
+        public Point()
         {
-       public  static void Run()
-        {
-            Drv d = new Drv("RRR");
-            Console.WriteLine(" rrr  " + d.ToString());
+            x = 0;
+            y = 0;
+            c = 0;
         }
-        }
-    class Base
-    {
-        string NameBase;
-        protected string any_Inform;
-        int type = 0;
-        public int numobj = 0;
-        public Base() {
-            NameBase = "Base";
-            any_Inform = "";
 
+        public Point(int x_, int y_, int c_)
+        {
+            x = x_;
+            y = y_;
+            c = c_;
         }
+
+        public void Print()
+        {
+            Console.WriteLine($"x: {x}, y: {y}, color: {c}");
+        }
+
+        public double Distance()
+        {
+            return Math.Sqrt(x * x + y * y);
+        }
+
+        public void Move(int x1, int y1)
+        {
+            x = x + x1;
+            y = y + y1;
+        }
+
+        public void setX(int newX)
+        {
+            x = newX;
+        }
+
+        public int getX()
+        {
+            return x;
+        }
+
+        public void setY(int newY)
+        {
+            y = newY;
+        }
+
+        public int getY()
+        {
+            return y;
+        }
+
+        public int getColor()
+        {
+            return c;
+        }
+
+    }
+    
+    //2.11. Автомобіль, поїзд, транспортний засіб, експрес
+    class TransZasib
+    {
+        protected double maxSpeed;
+
+        public TransZasib()
+        {
+            maxSpeed = 0;
+        }
+
+        public TransZasib(double speed)
+        {
+            maxSpeed = speed;
+        }
+
         public void Show()
         {
-            Console.WriteLine(" Show Base " + NameBase);
-        }
-    };
-
-    class Drv :  Base
-    {
-        Drv()
-        {
-            numobj = 10;
-        }
-       public Drv(string any_Inform)
-        {
-            numobj = 11;
-            this.any_Inform = any_Inform;
+            Console.WriteLine($"Max Speed: {maxSpeed}");
         }
     }
+
+    class Auto : TransZasib
+    {
+        
+        public Auto()
+        {
+            maxSpeed = 250;
+        }
+
+        public Auto(double maxSpeed)
+        {
+            this.maxSpeed = maxSpeed;
+        }
+        
+    }
+    
+    class Train : TransZasib
+    {
+        
+        public Train()
+        {
+            maxSpeed = 150;
+        }
+
+        public Train(double maxSpeed)
+        {
+            this.maxSpeed = maxSpeed;
+        }
+        
+    }
+    
+    class Express : TransZasib
+    {
+        
+        public Express()
+        {
+            maxSpeed = 300;
+        }
+
+        public Express(double maxSpeed)
+        {
+            this.maxSpeed = maxSpeed;
+        }
+        
+    }
+    
+    
+    static class Program
+    {
+        static void Main()
+        {
+            Point a = new Point();
+            Point b = new Point(2, 3, 4);
+            Console.Write("A: ");
+            a.Print();
+            Console.Write("B: ");
+            b.Print();
+            Console.WriteLine($"B-0: {b.Distance()}");
+            a.Move(3,5);
+            Console.Write("A moved to 3,5: ");
+            a.Print();
+            a.setX(10);
+            Console.Write("A x set to 10: ");
+            a.Print();
+            //-----------------
+            TransZasib transZasib = new TransZasib();
+            transZasib.Show();
+            Auto auto = new Auto(120);
+            auto.Show();
+            Train train = new Train();
+            train.Show();
+            Express express = new Express(400);
+            express.Show();
+        }
+    }
+    
 }
